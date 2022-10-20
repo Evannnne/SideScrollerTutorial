@@ -31,6 +31,9 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-           
+        float hMove = Input.GetAxisRaw("Horizontal") * movementSpeed;
+        Vector2 v = m_rigidbody.velocity;
+        v.x = hMove;
+        m_rigidbody.velocity = v;
     }
 }
