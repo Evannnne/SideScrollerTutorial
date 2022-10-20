@@ -35,5 +35,54 @@ public class PlayerBehaviour : MonoBehaviour
         Vector2 v = m_rigidbody.velocity;
         v.x = hMove;
         m_rigidbody.velocity = v;
+
+
+        bool ground = false;
+        var colliders = Physics2D.OverlapBoxAll(
+            (Vector2)transform.position + Vector2.down * 0.1f, 
+            new Vector2(0.45f, 1),
+            0
+        );
+        foreach (var c in colliders)
+            if (c.gameObject != gameObject)
+                ground = true;
+
+        if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (ground)
+            {
+                m_rigidbody.AddForce(Vector2.up * jumpVelocity * m_rigidbody.mass, ForceMode2D.Impulse);
+            }
+        }
+
+        m_animator.SetBool("Moving", hMove != 0);
+        m_animator.SetBool("Grounded", ground);
+    }
+
+    public void Damage(float damage)
+    {
+        if (m_canBeDamaged)
+        {
+            health -= damage;
+            if (health <= 0) Application.LoadLevel(Application.loadedLevel);
+            else StartCoroutine(_Damage());
+        }
+    }
+    IEnumerator _Damage()
+    {
+        m_canBeDamaged = false;
+        m_spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        m_spriteRenderer.color = Color.white;
+        m_canBeDamaged = true;
+    }
+
+    private void OnGUI()
+    {
+        GUI.Label(
+            new Rect(5, 0, 200, 200),
+            $"Health: {health}", 
+            new GUIStyle { fontSize = 24, fontStyle = FontStyle.Bold }
+        );
     }
 }
