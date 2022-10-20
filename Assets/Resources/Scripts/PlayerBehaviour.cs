@@ -12,6 +12,8 @@ public class PlayerBehaviour : MonoBehaviour
     private Rigidbody2D m_rigidbody;
     private Animator m_animator;
 
+    private bool m_canBeDamaged = true;
+
     private void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
@@ -30,7 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         // Check if touching the ground
         bool ground = false;
-        var colliders = Physics2D.OverlapBoxAll((Vector2)transform.position + Vector2.down * 0.2f, Vector2.one, 0);
+        var colliders = Physics2D.OverlapBoxAll((Vector2)transform.position + Vector2.down * 0.1f, new Vector3(0.45f, 1, 1), 0);
         foreach (var c in colliders)
             if (c.gameObject != gameObject)
                 ground = true;
@@ -45,14 +47,29 @@ public class PlayerBehaviour : MonoBehaviour
 
         // Flip
         if (hMove != 0) m_spriteRenderer.flipX = hMove < 0 ? true : false;
-
-        if (Input.GetKeyDown(KeyCode.T)) StartCoroutine(Damage());
     }
 
-    IEnumerator Damage()
+    public void Damage(float dmg)
     {
+        if (m_canBeDamaged)
+        {
+            health -= dmg;
+            if(health <= 0)
+                Application.LoadLevel(Application.loadedLevel);
+            else StartCoroutine(_Damage());
+        }
+    }
+    IEnumerator _Damage()
+    {
+        m_canBeDamaged = false;
         m_spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.5f);
         m_spriteRenderer.color = Color.white;
+        m_canBeDamaged = true;
+    }
+
+    public void OnGUI()
+    {
+        GUI.Label(new Rect(5, 0, 200, 200), $"Health: {health}", new GUIStyle { fontSize = 24, fontStyle = FontStyle.Bold });
     }
 }
