@@ -7,6 +7,7 @@ public partial class PlayerBehaviour : MonoBehaviour
     public float movementSpeed = 16;
     public float jumpVelocity = 10;
     public bool canMove = true;
+    public float health;
 
     private SpriteRenderer m_spriteRenderer;
     private Rigidbody2D m_rigidbody;
