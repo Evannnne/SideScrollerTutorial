@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// A pre-included class that allows a screen-fade animation
 public class ScreenFadeBehaviour : MonoBehaviour
 {
     public float fadeFromBlackOnStartDuration = 0.5f;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// A pre-included class to have a UI with hearts for the player's health
 public class HeartUIBehaviour : MonoBehaviour
 {
     [SerializeField] private Sprite m_onSprite;
@@ -17,10 +18,12 @@ public class HeartUIBehaviour : MonoBehaviour
     }
     private void Update()
     {
-        for(int i = 0; i < m_heartSprites.Length; i++)
+        if (m_player != null)
         {
-            m_heartSprites[i].sprite = m_player.health >= (i + 1) ? m_onSprite : m_offSprite;
-
+            for (int i = 0; i < m_heartSprites.Length; i++)
+            {
+                m_heartSprites[i].sprite = m_player.health >= (i + 1) ? m_onSprite : m_offSprite;
+            }
         }
     }
 }

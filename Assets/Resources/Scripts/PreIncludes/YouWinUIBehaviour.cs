@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// A pre-included class that causes a game win animation
 public class YouWinUIBehaviour : MonoBehaviour
 {
     private Image m_image;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// A pre-included script to allow a camera shake effect
 public class CameraShaker : MonoBehaviour
 {
     [SerializeField] private Camera m_camera;
