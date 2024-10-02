@@ -393,6 +393,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   canMove: 0
+  movementSpeed: 4
+  jumpVelocity: 6
 --- !u!1001 &8736859190545961656
 PrefabInstance:
   m_ObjectHideFlags: 0
