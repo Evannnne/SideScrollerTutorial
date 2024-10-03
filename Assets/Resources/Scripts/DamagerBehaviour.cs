@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class DamagerBehaviour : MonoBehaviour
 {
-    // This class is a stub. Let's add to it!
+    public float damage = 1;
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        PlayerBehaviour collidedPlayer = collision.gameObject.GetComponent<PlayerBehaviour>();
+        if (collidedPlayer != null) collidedPlayer.Damage(damage);
+    }
 }
